@@ -23,20 +23,20 @@
 
                 <Toolbar
                     android:id="@+id/toolBar"
+                    style="@style/style_toolbar_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:title="@string/crypto_list"
-                    android:titleTextColor="@color/black_transparent_87" />
+                    android:title="@string/crypto_list" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="13dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.chip.ChipGroup
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp">
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -88,6 +88,7 @@
                 android:text="@string/error_message" />
 
             <Button
+                android:id="@+id/fragment_cryptocurrencies_try_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -96,6 +97,7 @@
         </LinearLayout>
 
         <ProgressBar
+            android:id="@+id/fragment_cryptocurrencies_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -112,27 +114,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_cryptocurrencies_action_bar">
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/fragment_trg_list_swipe_refresh_layout"
+            <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+            <RelativeLayout
+                android:id="@+id/fragment_cryptocurrencies_swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/fragment_trg_list_rv"
+                    android:id="@+id/fragment_cryptocurrencies_list_rv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:overScrollMode="never"
+                    android:visibility="gone"
                     android:paddingBottom="120dp"
-                    android:scrollbars="none"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:listitem="@layout/list_item_cryptocurrency" />
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
