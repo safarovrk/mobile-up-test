@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/cryptocurrenciesFragment"
-        android:name="com.example.mobileuptest.CryptocurrenciesFragment"
+        android:name="com.example.mobileuptest.presentation.cryptocurrencies.CryptocurrenciesFragment"
         android:label="CryptocurrenciesFragment" />
     <action
         android:id="@+id/action_global_cryptocurrenciesFragment"
