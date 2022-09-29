@@ -11,10 +11,16 @@ import com.example.mobileuptest.domain.models.Cryptocurrency
 import java.util.*
 
 
-data class RecyclerViewItem(val cryptocurrency: Cryptocurrency?)
+data class RecyclerViewItem(val cryptocurrency: Cryptocurrency?, val currency: String)
 
 class CryptocurrenciesListAdapter : RecyclerView.Adapter<CryptocurrenciesListAdapter.ViewHolder>() {
 
+    companion object {
+        const val USD = "USD"
+        const val EUR = "EUR"
+    }
+
+    var currency = USD
     var data = listOf<Cryptocurrency?>()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
@@ -28,7 +34,7 @@ class CryptocurrenciesListAdapter : RecyclerView.Adapter<CryptocurrenciesListAda
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(RecyclerViewItem(item))
+        holder.bind(RecyclerViewItem(item, currency))
     }
 
     override fun getItemCount(): Int = data.size
@@ -45,13 +51,18 @@ class CryptocurrenciesListAdapter : RecyclerView.Adapter<CryptocurrenciesListAda
                     item.cryptocurrency.symbol.uppercase(Locale.ROOT)
             }
             if (item.cryptocurrency?.current_price != null) {
-                //if (eur usd)
-                /*binding.listItemCryptocurrencyCryptoSum.text =
-                    item.cryptocurrency.current_price.toString()*/
-                binding.listItemCryptocurrencyCryptoSum.text = itemView.context.getString(
-                    R.string.crypto_usd,
-                    item.cryptocurrency.current_price.toString()
-                )
+                if (item.currency == USD) {
+                    binding.listItemCryptocurrencyCryptoSum.text = itemView.context.getString(
+                        R.string.crypto_usd,
+                        item.cryptocurrency.current_price.toString()
+                    )
+                }
+                if (item.currency == EUR) {
+                    binding.listItemCryptocurrencyCryptoSum.text = itemView.context.getString(
+                        R.string.crypto_eur,
+                        item.cryptocurrency.current_price.toString()
+                    )
+                }
             }
             if (item.cryptocurrency?.price_change_percentage_24h != null) {
                 if (item.cryptocurrency.price_change_percentage_24h < 0) {
@@ -68,8 +79,7 @@ class CryptocurrenciesListAdapter : RecyclerView.Adapter<CryptocurrenciesListAda
                     )
                     binding.listItemCryptocurrencyCryptoPercent
                         .setTextColor(itemView.context.getColor(R.color.green_crypto_percent))
-                }
-                else {
+                } else {
                     binding.listItemCryptocurrencyCryptoPercent.text = itemView.context.getString(
                         R.string.crypto_percent_minus,
                         item.cryptocurrency.price_change_percentage_24h.toString()

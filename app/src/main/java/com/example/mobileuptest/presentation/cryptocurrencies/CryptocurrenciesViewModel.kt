@@ -10,18 +10,19 @@ class CryptocurrenciesViewModel: ViewModel() {
 
     val cryptocurrenciesModel: MutableLiveData<CryptocurrenciesModel> = MutableLiveData()
     private val getCryptocurrenciesUseCase = GetCryptocurrenciesUseCase()
-
     val exception: MutableLiveData<Boolean> = MutableLiveData()
+
+    val checkedChipValue: MutableLiveData<String> = MutableLiveData()
 
     init {
         cryptocurrenciesModel.value = CryptocurrenciesModel(listOf())
     }
 
-    fun loadData() {
+    fun loadData(currency: String) {
         viewModelScope.launch {
             try {
                 cryptocurrenciesModel.value =
-                    CryptocurrenciesModel(getCryptocurrenciesUseCase.invoke("usd"))
+                    CryptocurrenciesModel(getCryptocurrenciesUseCase.invoke(currency))
             } catch (e: Exception) { exception.value = true }
         }
     }
