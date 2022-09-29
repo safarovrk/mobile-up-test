@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.size
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.mobileuptest.R
 import com.example.mobileuptest.databinding.FragmentCryptocurrenciesBinding
@@ -15,7 +17,14 @@ class CryptocurrenciesFragment : Fragment() {
 
     private lateinit var binding: FragmentCryptocurrenciesBinding
     private val viewModel: CryptocurrenciesViewModel by navGraphViewModels(R.id.nav_graph)
-    private val adapter = CryptocurrenciesListAdapter()
+    private val adapter = CryptocurrenciesListAdapter(CryptocurrencyClickListener { cryptocurrency ->
+        if (cryptocurrency != null) {
+            findNavController().navigate(
+                R.id.action_cryptocurrenciesFragment_to_cryptoInfoFragment,
+                bundleOf("cryptocurrencyId" to cryptocurrency.id)
+            )
+        }
+    })
     private var lastCheckedId: Int = View.NO_ID
 
     override fun onCreateView(

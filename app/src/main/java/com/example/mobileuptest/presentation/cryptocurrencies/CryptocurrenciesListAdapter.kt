@@ -13,7 +13,7 @@ import java.util.*
 
 data class RecyclerViewItem(val cryptocurrency: Cryptocurrency?, val currency: String)
 
-class CryptocurrenciesListAdapter : RecyclerView.Adapter<CryptocurrenciesListAdapter.ViewHolder>() {
+class CryptocurrenciesListAdapter(private val clickListener: CryptocurrencyClickListener) : RecyclerView.Adapter<CryptocurrenciesListAdapter.ViewHolder>() {
 
     companion object {
         const val USD = "USD"
@@ -34,14 +34,17 @@ class CryptocurrenciesListAdapter : RecyclerView.Adapter<CryptocurrenciesListAda
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(RecyclerViewItem(item, currency))
+        holder.bind(RecyclerViewItem(item, currency), clickListener)
     }
 
     override fun getItemCount(): Int = data.size
 
     class ViewHolder private constructor(private val binding: ListItemCryptocurrencyBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: RecyclerViewItem) {
+        fun bind(item: RecyclerViewItem, clickListener: CryptocurrencyClickListener) {
+            binding.listItemCryptocurrency.setOnClickListener {
+                clickListener.onClick(item)
+            }
             if (item.cryptocurrency?.name != null) {
                 binding.listItemCryptocurrencyCrypto.text =
                     item.cryptocurrency.name
@@ -102,5 +105,11 @@ class CryptocurrenciesListAdapter : RecyclerView.Adapter<CryptocurrenciesListAda
                 return ViewHolder(binding)
             }
         }
+    }
+}
+
+class CryptocurrencyClickListener(val clickListener: (cryptocurrency: Cryptocurrency?) -> Unit) {
+    fun onClick(cryptocurrency: RecyclerViewItem) {
+        clickListener(cryptocurrency.cryptocurrency)
     }
 }

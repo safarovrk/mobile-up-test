@@ -1,6 +1,7 @@
 package com.example.mobileuptest.domain.models
 
 data class Cryptocurrency(
+    val id: String,
     val image: String,
     val name: String,
     val current_price: Double,
