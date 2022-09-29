@@ -8,6 +8,7 @@ class RepositoryImpl : Repository {
     override suspend fun getCryptocurrencies(currency: String): List<Cryptocurrency> {
         return RetrofitClient.serviceAPI.getCryptocurrencies(currency).map {
             return@map Cryptocurrency(
+                id = it.id,
                 name = it.name,
                 image = it.image,
                 price_change_percentage_24h = it.price_change_percentage_24h,
