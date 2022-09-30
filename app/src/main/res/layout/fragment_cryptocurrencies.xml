@@ -127,7 +127,7 @@
                     android:clipToPadding="false"
                     android:visibility="gone"
                     android:paddingBottom="120dp"
-                    android:overScrollMode="never"
+                    android:scrollbars="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
