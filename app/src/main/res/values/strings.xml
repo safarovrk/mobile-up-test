@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MobileUpTest</string>
+    <string name="crypto_list">Список криптовалют</string>
+    <string name="usd">USD</string>
+    <string name="eur">EUR</string>
+    <string name="try_reload">Попробовать</string>
+    <string name="description">Описание</string>
+    <string name="categories">Категории</string>
+    <string name="error_message">Случилась какая-то ошибка :(\nПопробуем снова?</string>
+    <string name="error_refresh_message">Произошла ошибка при загрузке</string>
+    <string name="crypto_percent_minus">%1$s%%</string>
+    <string name="crypto_percent_plus">+%1$s%%</string>
+    <string name="crypto_eur">€ %1$s</string>
+    <string name="crypto_usd">$ %1$s</string>
+</resources>

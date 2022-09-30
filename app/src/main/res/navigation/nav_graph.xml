@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cryptocurrenciesFragment">
+
+    <fragment
+        android:id="@+id/cryptocurrenciesFragment"
+        android:name="com.example.mobileuptest.presentation.cryptocurrencies.CryptocurrenciesFragment"
+        android:label="CryptocurrenciesFragment" >
+        <action
+            android:id="@+id/action_cryptocurrenciesFragment_to_cryptoInfoFragment"
+            app:destination="@id/cryptoInfoFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_cryptocurrenciesFragment"
+        app:destination="@id/cryptocurrenciesFragment"
+        app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/cryptoInfoFragment"
+        android:name="com.example.mobileuptest.presentation.cryptoinfo.CryptoInfoFragment"
+        android:label="fragment_crypto_info"
+        tools:layout="@layout/fragment_crypto_info" >
+        <argument
+            android:name="cryptocurrencyId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="cryptocurrencyName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_cryptoInfoFragment_to_cryptocurrenciesFragment"
+            app:destination="@id/cryptocurrenciesFragment" />
+    </fragment>
+</navigation>
