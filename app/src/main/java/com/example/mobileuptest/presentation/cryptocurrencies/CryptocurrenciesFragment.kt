@@ -17,14 +17,18 @@ class CryptocurrenciesFragment : Fragment() {
 
     private lateinit var binding: FragmentCryptocurrenciesBinding
     private val viewModel: CryptocurrenciesViewModel by navGraphViewModels(R.id.nav_graph)
-    private val adapter = CryptocurrenciesListAdapter(CryptocurrencyClickListener { cryptocurrency ->
-        if (cryptocurrency != null) {
-            findNavController().navigate(
-                R.id.action_cryptocurrenciesFragment_to_cryptoInfoFragment,
-                bundleOf("cryptocurrencyId" to cryptocurrency.id)
-            )
-        }
-    })
+    private val adapter =
+        CryptocurrenciesListAdapter(CryptocurrencyClickListener { cryptocurrency ->
+            if (cryptocurrency != null) {
+                findNavController().navigate(
+                    R.id.action_cryptocurrenciesFragment_to_cryptoInfoFragment,
+                    bundleOf(
+                        "cryptocurrencyId" to cryptocurrency.id,
+                        "cryptocurrencyName" to cryptocurrency.name
+                    )
+                )
+            }
+        })
     private var lastCheckedId: Int = View.NO_ID
 
     override fun onCreateView(
@@ -36,15 +40,13 @@ class CryptocurrenciesFragment : Fragment() {
         setListeners()
         setObservers()
         chipStateInit()
-        startLoadingData()
+        loadData()
         return binding.root
     }
 
     private fun setListeners() {
         binding.fragmentCryptocurrenciesTryButton.setOnClickListener {
-            binding.fragmentCryptocurrenciesErrorPanel.visibility = View.GONE
-            binding.fragmentCryptocurrenciesProgress.visibility = View.VISIBLE
-            startLoadingData()
+            loadData()
         }
         binding.fragmentCryptocurrenciesChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             if (checkedIds[0] == View.NO_ID) {
@@ -71,22 +73,25 @@ class CryptocurrenciesFragment : Fragment() {
             if (adapter.data.isEmpty())
                 binding.fragmentCryptocurrenciesListRv.visibility = View.GONE
             else {
+                binding.fragmentCryptocurrenciesErrorPanel.visibility = View.GONE
                 binding.fragmentCryptocurrenciesProgress.visibility = View.GONE
                 binding.fragmentCryptocurrenciesListRv.visibility = View.VISIBLE
             }
 
         }
         viewModel.checkedChipValue.observe(viewLifecycleOwner) {
-            startLoadingData()
+            loadData()
         }
     }
 
-    private fun startLoadingData() {
+    private fun loadData() {
         viewModel.checkedChipValue.value?.let {
-            viewModel.loadData(it)
+            binding.fragmentCryptocurrenciesErrorPanel.visibility = View.GONE
             binding.fragmentCryptocurrenciesListRv.visibility = View.GONE
             binding.fragmentCryptocurrenciesProgress.visibility = View.VISIBLE
+            viewModel.loadData(it)
         }
+
     }
 
     private fun chipStateInit() {
