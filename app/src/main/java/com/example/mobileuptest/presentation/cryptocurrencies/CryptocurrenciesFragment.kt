@@ -40,7 +40,6 @@ class CryptocurrenciesFragment : Fragment() {
         setListeners()
         setObservers()
         chipStateInit()
-        loadData()
         return binding.root
     }
 
@@ -48,14 +47,14 @@ class CryptocurrenciesFragment : Fragment() {
         binding.fragmentCryptocurrenciesTryButton.setOnClickListener {
             loadData()
         }
-        binding.fragmentCryptocurrenciesChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
-            if (checkedIds[0] == View.NO_ID) {
+        binding.fragmentCryptocurrenciesChipGroup.setOnCheckedStateChangeListener { group, _ ->
+            if (group.checkedChipId == View.NO_ID) {
                 group.check(lastCheckedId)
                 return@setOnCheckedStateChangeListener
             }
-            lastCheckedId = checkedIds[0]
+            lastCheckedId = group.checkedChipId
             viewModel.checkedChipValue.value =
-                group.findViewById<Chip>(checkedIds[0]).text.toString()
+                group.findViewById<Chip>(group.checkedChipId).text.toString()
         }
         binding.fragmentCryptocurrenciesSwipeRefreshLayout.setOnRefreshListener {
             loadData()

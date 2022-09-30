@@ -23,10 +23,26 @@ class CryptoInfoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.nameData.value = CryptoInfoFragmentArgs.fromBundle(requireArguments()).cryptocurrencyName
+        if (CryptoInfoFragmentArgs.fromBundle(requireArguments()).cryptocurrencyName != null) {
+            viewModel.nameData.value =
+                CryptoInfoFragmentArgs.fromBundle(requireArguments()).cryptocurrencyName
+        } else if (savedInstanceState != null) {
+            viewModel.nameData.value = savedInstanceState.getString("cryptocurrencyName")
+        }
+        if (CryptoInfoFragmentArgs.fromBundle(requireArguments()).cryptocurrencyId != null) {
+            viewModel.idData.value =
+                CryptoInfoFragmentArgs.fromBundle(requireArguments()).cryptocurrencyId
+        } else if (savedInstanceState != null) {
+            viewModel.idData.value = savedInstanceState.getString("cryptocurrencyId")
+        }
         viewModel.idData.value = CryptoInfoFragmentArgs.fromBundle(requireArguments()).cryptocurrencyId
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("cryptocurrencyName", viewModel.nameData.value)
+        outState.putString("cryptocurrencyId", viewModel.idData.value)
+        super.onSaveInstanceState(outState)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,7 +60,7 @@ class CryptoInfoFragment : Fragment() {
 
     private fun setListeners() {
         binding.fragmentCryptoInfoToolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_cryptoInfoFragment_to_cryptocurrenciesFragment)
         }
         binding.fragmentCryptoInfoTryButton.setOnClickListener {
             loadData()
@@ -57,7 +73,7 @@ class CryptoInfoFragment : Fragment() {
                 binding.fragmentCryptoInfoDescriptionTxt.movementMethod = LinkMovementMethod.getInstance()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     binding.fragmentCryptoInfoDescriptionTxt.text = Html.fromHtml(it.cryptoInfo.description.en, Html.FROM_HTML_MODE_COMPACT)
-                }
+                } else binding.fragmentCryptoInfoDescriptionTxt.text = it.cryptoInfo.description.en
             }
             if (it.cryptoInfo?.image?.large != null) {
                 Glide.with(requireActivity()).load(it.cryptoInfo.image.large)

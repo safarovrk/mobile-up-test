@@ -110,7 +110,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_bitcoin" />
+                android:src="@drawable/ic_bitcoin"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="wrap_content"

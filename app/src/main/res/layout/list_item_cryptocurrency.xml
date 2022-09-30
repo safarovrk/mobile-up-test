@@ -41,7 +41,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="BitcoinTest"
             app:layout_constraintStart_toEndOf="@+id/list_item_cryptocurrency_img_constraint"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,7 +49,6 @@
             style="@style/style_list_crypto_short"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BCNTST"
             app:layout_constraintStart_toStartOf="@+id/list_item_cryptocurrency_crypto"
             app:layout_constraintTop_toBottomOf="@+id/list_item_cryptocurrency_crypto" />
 
@@ -59,7 +57,6 @@
             style="@style/style_list_crypto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2300$"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +65,6 @@
             style="@style/style_list_crypto_short"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+0.000%"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/list_item_cryptocurrency_crypto_sum" />
 

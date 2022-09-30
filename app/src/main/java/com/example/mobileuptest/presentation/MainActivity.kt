@@ -3,10 +3,13 @@ package com.example.mobileuptest.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mobileuptest.R
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,7 +17,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        navController.navigate(R.id.action_global_cryptocurrenciesFragment)
+        navController = navHostFragment.navController
+        savedInstanceState?.getInt("currentDestination")?.let { navController.navigate(it) }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        navController.currentDestination?.id?.let { outState.putInt("currentDestination", it) }
+        super.onSaveInstanceState(outState)
     }
 }
