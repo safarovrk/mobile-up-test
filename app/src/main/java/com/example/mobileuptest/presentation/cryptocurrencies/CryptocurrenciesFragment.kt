@@ -57,12 +57,21 @@ class CryptocurrenciesFragment : Fragment() {
             viewModel.checkedChipValue.value =
                 group.findViewById<Chip>(checkedIds[0]).text.toString()
         }
+        binding.fragmentCryptocurrenciesSwipeRefreshLayout.setOnRefreshListener {
+            loadData()
+        }
     }
 
     private fun setObservers() {
         viewModel.exception.observe(viewLifecycleOwner) {
-            binding.fragmentCryptocurrenciesProgress.visibility = View.GONE
-            binding.fragmentCryptocurrenciesErrorPanel.visibility = View.VISIBLE
+            if (binding.fragmentCryptocurrenciesSwipeRefreshLayout.isRefreshing) {
+                binding.fragmentCryptocurrenciesSwipeRefreshLayout.isRefreshing = false
+                binding.fragmentCryptocurrenciesRefreshError.visibility = View.VISIBLE
+            } else {
+                binding.fragmentCryptocurrenciesProgress.visibility = View.GONE
+                binding.fragmentCryptocurrenciesErrorPanel.visibility = View.VISIBLE
+            }
+
         }
         viewModel.cryptocurrenciesModel.observe(viewLifecycleOwner) {
             if (viewModel.checkedChipValue.value != null) {
@@ -71,11 +80,13 @@ class CryptocurrenciesFragment : Fragment() {
             adapter.data =
                 viewModel.cryptocurrenciesModel.value?.cryptocurrencies ?: mutableListOf()
             if (adapter.data.isEmpty())
-                binding.fragmentCryptocurrenciesListRv.visibility = View.GONE
+                binding.fragmentCryptocurrenciesSwipeRefreshLayout.visibility = View.GONE
             else {
+                binding.fragmentCryptocurrenciesSwipeRefreshLayout.isRefreshing = false
                 binding.fragmentCryptocurrenciesErrorPanel.visibility = View.GONE
                 binding.fragmentCryptocurrenciesProgress.visibility = View.GONE
-                binding.fragmentCryptocurrenciesListRv.visibility = View.VISIBLE
+                binding.fragmentCryptocurrenciesRefreshError.visibility = View.GONE
+                binding.fragmentCryptocurrenciesSwipeRefreshLayout.visibility = View.VISIBLE
             }
 
         }
@@ -86,9 +97,12 @@ class CryptocurrenciesFragment : Fragment() {
 
     private fun loadData() {
         viewModel.checkedChipValue.value?.let {
-            binding.fragmentCryptocurrenciesErrorPanel.visibility = View.GONE
-            binding.fragmentCryptocurrenciesListRv.visibility = View.GONE
-            binding.fragmentCryptocurrenciesProgress.visibility = View.VISIBLE
+            if (!binding.fragmentCryptocurrenciesSwipeRefreshLayout.isRefreshing) {
+                binding.fragmentCryptocurrenciesErrorPanel.visibility = View.GONE
+                binding.fragmentCryptocurrenciesSwipeRefreshLayout.visibility = View.GONE
+                binding.fragmentCryptocurrenciesRefreshError.visibility = View.GONE
+                binding.fragmentCryptocurrenciesProgress.visibility = View.VISIBLE
+            }
             viewModel.loadData(it)
         }
 
