@@ -1,5 +1,6 @@
 package com.example.mobileuptest.presentation.cryptocurrencies
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +16,8 @@ class CryptocurrenciesViewModel: ViewModel() {
     val checkedChipValue: MutableLiveData<String> = MutableLiveData()
 
     init {
-        cryptocurrenciesModel.value = CryptocurrenciesModel(listOf())
+        /*Log.e("sdfsd", "grusd")
+        loadData("USD")*/
     }
 
     fun loadData(currency: String) {
