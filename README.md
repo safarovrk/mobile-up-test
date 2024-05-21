@@ -1,6 +1,7 @@
 ## Демонстрация UI:
 ![mobileup_test](https://github.com/safarovrk/mobile-up-test/assets/63085095/0b4b5fbf-42a6-45ca-b30e-3204f5b8c4d4)
 
+[Обновлённый вариант проекта на другом стеке](https://github.com/safarovrk/mobileup-test-new-stack)
 ## Оценка временных затрат:
 
 #### Экран «список криптовалют»
